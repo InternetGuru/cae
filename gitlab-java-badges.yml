@@ -11,8 +11,8 @@ java-badges:
     # install readme-badges
     - git clone https://github.com/InternetGuru/readme-badges
     - |
-        if ! git -C readme-badges checkout -q "$README-BADGES_REVISION"; then
-          revision="$(git -C readme-badges tag | grep ^v$README-BADGES_REVISION\. | sort --version-sort | tail -1)"
+        if ! git -C readme-badges checkout -q "$RB_REVISION"; then
+          revision="$(git -C readme-badges tag | grep ^v$RB_REVISION\. | sort --version-sort | tail -1)"
           git -C readme-badges checkout "$revision"
         fi
     # set permissions
