@@ -8,7 +8,7 @@ curl -o ".results/test.svg" "https://img.shields.io/badge/Tests%20Passed-0/0-gra
 mvn compile > .results/compile.log 2>&1 || exit 0
 curl -o ".results/compile.svg" "https://img.shields.io/badge/Compile-passed-success"
 
-tmppom="$(mktmp -d)/checkstyle-pom.xml"
+tmppom="$(mktemp -d)/checkstyle-pom.xml"
 
 cat << 'EOD' > "$tmppom"
 <project>

@@ -1,6 +1,3 @@
-stages:
-  - java-badges
-
 java-badges:
   image: maven:latest
   stage: java-badges
