@@ -1,3 +1,6 @@
+
+![tests badge](https://github.com/InternetGuru/cae/workflows/tests/badge.svg)
+
 # Coding Assignment Evaluation | CAE
 
 > This script evaluates GitLab Java projects on compilation, [coding style](https://google.github.io/styleguide/javaguide.html) and automatic tests. It generates colored summary badges and logs to be displayed and linked from projects' README files.
