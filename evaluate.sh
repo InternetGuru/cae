@@ -1,6 +1,8 @@
 #!/bin/bash
 
-mkdir .results
+SRC="src/main"
+
+mkdir -p .results
 curl -o ".results/compile.svg" "https://img.shields.io/badge/Compile-failed-critical"
 curl -o ".results/checkstyle.svg" "https://img.shields.io/badge/Code%20Style-n/a-gray"
 curl -o ".results/test.svg" "https://img.shields.io/badge/Tests%20Passed-0/0-gray"
@@ -22,7 +24,7 @@ cat << EOD > "$tmppom"
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <build>
-    <sourceDirectory>$(pwd)/src/main</sourceDirectory>
+    <sourceDirectory>$(pwd)/$SRC</sourceDirectory>
     <testSourceDirectory>$(pwd)/src/test</testSourceDirectory>
     <pluginManagement>
       <plugins>
@@ -53,71 +55,13 @@ cat << EOD > "$tmppom"
 </project>
 EOD
 
-results="$(mvn -f "$tmppom" checkstyle:check 2>/dev/null)"
-
-echo "$results"
-
-# save results into log
-mkdir -p .results
-echo "$results" | grep '^\[\(WARN\|ERROR\)' > .results/checkstyle.log
-
-# calc avg code style compliance
-perc="$(echo "$results" | awk -f <(cat - <<-'EOD'
-
-  function calc_perc_errs (file, cntErrs) {
-    numLines = 0
-    while ((getline line < file)) {
-      numLines++
-    }
-    close(str[1])
-    #print file
-    #print cntErrs "/" numLines
-    #print cntErrs/numLines
-    return cntErrs/numLines
-  }
-  BEGIN {
-    fileErrs = 0
-    file = ""
-    numFiles = 0
-    sum = 0
-    matches = 0
-    lastLine = 0
-  }
-  /^\[(WARN|ERROR)\]/ {
-    matches = 1
-    split($2, str, ":")
-    if (lastLine == str[2]) {
-      next
-    }
-    if (file == "") {
-      file = str[1]
-    }
-    if (file != str[1]) {
-      percErrs = calc_perc_errs(file, fileErrs)
-      sum += percErrs
-      numFiles++
-      file = str[1]
-      fileErrs = 0
-    } else {
-      fileErrs++
-    }
-    lastLine = str[2]
-  }
-  END {
-    if (matches == 0) {
-      exit
-    }
-    numFiles++
-    percErrs = calc_perc_errs(file, fileErrs)
-    sum += percErrs
-    printf "%.0f\n", 100-(sum/numFiles)*100
-  }
-
-EOD
-))"
-
-[[ -z "$perc" ]] \
-  && perc=100
+# run checkstyle and save warnings and errors into log
+errs=$(mvn -f "$tmppom" checkstyle:check | grep '^\[\(WARN\|ERROR\)' | tee .results/checkstyle.log | wc -l) \
+  || exit 1
+lines=$(find $SRC -name "*.java" -exec cat {} + | wc -l)
+perc=100
+[[ $errs -gt 0 ]] \
+  && perc=$(( 99 - errs * 100 / lines ))
 
 # output results to .results/checkstyle.json
 color="brightgreen"
