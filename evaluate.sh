@@ -63,6 +63,8 @@ perc=100
 [[ $errs -gt 0 ]] \
   && perc=$(( 99 - errs * 100 / lines ))
 
+echo "[$perc]"
+
 # output results to .results/checkstyle.json
 color="brightgreen"
 [[ $perc -lt 85 ]] \
