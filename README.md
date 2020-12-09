@@ -4,13 +4,13 @@
 
 # Coding Assignment Evaluation | CAE
 
-> This script evaluates GitLab Java projects on compilation, [coding style](https://google.github.io/styleguide/javaguide.html) and automatic tests. It generates colored summary badges and logs to be displayed and linked from projects' README files.
+> This script evaluates GitLab Java projects on compilation, coding style and automatic tests. It generates colored summary badges and logs to be displayed and linked from projects' README files.
 
 ## GitLab CI Usage
 
 1. Navigate into the project and switch to the branch you want to display badges in README file.
 
-   - E.g. [umiami/george/csc220/matrix@master](https://gitlab.com/umiami/george/csc220/matrix/-/tree/master)
+   - E.g. [umiami/george/csc220/matrix](https://gitlab.com/umiami/george/csc220/matrix)
 
 1. Add the following lines into your `.gitlab-ci.yml` file. You may want to select a different evaluate script revision. Do not modify `CAE_REVISION` variable unless you know what you're doing.
 
