@@ -25,13 +25,17 @@
      - evaluate
    ```
 
-1. To display badges in `README.md` with a link to result log:
+1. To display badges in `README.md` file with a link to result log:
 
-```
-[![Java Check Style Badge](https://gitlab.com/[PROJECT_PATH]/builds/artifacts/master/raw/.results/checkstyle.svg?job=evaluate)](https://gitlab.com/[PROJECT_PATH]/-/jobs/artifacts/master/file/.results/checkstyle.log?job=evaluate)
-```
+   ```
+   [![pipeline status](https://gitlab.com/$PROJECT_NS/badges/$BRANCH/pipeline.svg)](https://gitlab.com/$PROJECT_NS/-/pipelines?ref=$BRANCH)
+   [![compile](https://gitlab.com/$PROJECT_NS/builds/artifacts/$BRANCH/raw/.results/compile.svg?job=evaluate)](https://gitlab.com/$PROJECT_NS/-/jobs/artifacts/$BRANCH/file/.results/compile.log?job=evaluate)
+   [![checkstyle](https://gitlab.com/$PROJECT_NS/builds/artifacts/$BRANCH/raw/.results/checkstyle.svg?job=evaluate)](https://gitlab.com/$PROJECT_NS/-/jobs/artifacts/$BRANCH/file/.results/checkstyle.log?job=evaluate)
+   [![test](https://gitlab.com/$PROJECT_NS/builds/artifacts/$BRANCH/raw/.results/test.svg?job=evaluate)](https://gitlab.com/$PROJECT_NS/-/jobs/artifacts/$BRANCH/file/.results/test.log?job=evaluate)
+   ```
 
-Note: Replace `[PROJECT_PATH]` with your actual project path, e.g. `umiami/george/csc220/lab02`.
+   - Replace `$PROJECT_NS` with your actual project namespace, e.g. `umiami/george/csc220/matrix`.
+   - Replace `$BRANCH` with actual branch for current `README.md` file, e.g. `master` or `fall20`.
 
 ## Checkstyle IDE Extensions
 
@@ -49,4 +53,3 @@ Note: Replace `[PROJECT_PATH]` with your actual project path, e.g. `umiami/georg
 - [Maven checkstyle plugin](https://maven.apache.org/plugins/maven-checkstyle-plugin/)
 - [GitLab job artifacts](https://docs.gitlab.com/ee/ci/pipelines/job_artifacts.html)
 - [Shields.io](https://shields.io/)
-
