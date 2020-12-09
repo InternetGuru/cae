@@ -10,7 +10,7 @@ curl -o ".results/compile.svg" "https://img.shields.io/badge/Compile-passed-succ
 
 tmppom="$(mktemp -d)/checkstyle-pom.xml"
 
-cat << 'EOD' > "$tmppom"
+cat << EOD > "$tmppom"
 <project>
   <modelVersion>4.0.0</modelVersion>
   <groupId>InternetGuru</groupId>
@@ -22,8 +22,8 @@ cat << 'EOD' > "$tmppom"
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <build>
-    <sourceDirectory>${project.basedir}/src/main</sourceDirectory>
-    <testSourceDirectory>${project.basedir}/src/test</testSourceDirectory>
+    <sourceDirectory>$(pwd)/src/main</sourceDirectory>
+    <testSourceDirectory>$(pwd)/src/test</testSourceDirectory>
     <pluginManagement>
       <plugins>
          <plugin>
