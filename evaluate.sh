@@ -55,6 +55,8 @@ EOD
 
 results="$(mvn -f "$tmppom" checkstyle:check 2>/dev/null)"
 
+echo "$results"
+
 # save results into log
 mkdir -p .results
 echo "$results" | grep '^\[\(WARN\|ERROR\)' > .results/checkstyle.log
