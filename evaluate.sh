@@ -56,14 +56,13 @@ cat << EOD > "$tmppom"
 EOD
 
 # run checkstyle and save warnings and errors into log
-errs=$(mvn -f "$tmppom" checkstyle:check | grep '^\[\(WARN\|ERROR\)' | tee .results/checkstyle.log | wc -l) \
+mvn -f "$tmppom" checkstyle:check | grep '^\[\(WARN\|ERROR\)' > .results/checkstyle.log \
   || exit 1
+errs=$(cut -d" " -f2 < .results/checkstyle.log | sort -ut: -k1,2 | wc -l)
 lines=$(find $SRC -name "*.java" -exec cat {} + | wc -l)
 perc=100
 [[ $errs -gt 0 ]] \
   && perc=$(( 99 - errs * 100 / lines ))
-
-echo "[$perc]"
 
 # output results to .results/checkstyle.json
 color="brightgreen"
