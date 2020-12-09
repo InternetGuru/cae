@@ -4,13 +4,13 @@
 
 # Coding Assignment Evaluation | CAE
 
-> This script evaluates GitLab Java projects on compilation, [coding style](https://google.github.io/styleguide/javaguide.html) and automatic tests. It generates colored summary badges and logs to be displayed and linked from projects' README files.
+> This script evaluates GitLab Java projects on compilation, coding style and automatic tests. It generates colored summary badges and logs to be displayed and linked from projects' README files.
 
 ## GitLab CI Usage
 
 1. Navigate into the project and switch to the branch you want to display badges in README file.
 
-   - E.g. [umiami/george/csc220/matrix@master](https://gitlab.com/umiami/george/csc220/matrix/-/tree/master)
+   - E.g. [umiami/george/csc220/matrix](https://gitlab.com/umiami/george/csc220/matrix)
 
 1. Add the following lines into your `.gitlab-ci.yml` file. You may want to select a different evaluate script revision. Do not modify `CAE_REVISION` variable unless you know what you're doing.
 
@@ -25,13 +25,17 @@
      - evaluate
    ```
 
-1. To display badges in `README.md` with a link to result log:
+1. To display badges in `README.md` file with links to appropriate log files:
 
-```
-[![Java Check Style Badge](https://gitlab.com/[PROJECT_PATH]/builds/artifacts/master/raw/.results/checkstyle.svg?job=evaluate)](https://gitlab.com/[PROJECT_PATH]/-/jobs/artifacts/master/file/.results/checkstyle.log?job=evaluate)
-```
+   ```
+   [![pipeline status](https://gitlab.com/$PROJECT_NS/badges/$BRANCH/pipeline.svg)](https://gitlab.com/$PROJECT_NS/-/pipelines?ref=$BRANCH)
+   [![compile](https://gitlab.com/$PROJECT_NS/builds/artifacts/$BRANCH/raw/.results/compile.svg?job=evaluate)](https://gitlab.com/$PROJECT_NS/-/jobs/artifacts/$BRANCH/file/.results/compile.log?job=evaluate)
+   [![checkstyle](https://gitlab.com/$PROJECT_NS/builds/artifacts/$BRANCH/raw/.results/checkstyle.svg?job=evaluate)](https://gitlab.com/$PROJECT_NS/-/jobs/artifacts/$BRANCH/file/.results/checkstyle.log?job=evaluate)
+   [![test](https://gitlab.com/$PROJECT_NS/builds/artifacts/$BRANCH/raw/.results/test.svg?job=evaluate)](https://gitlab.com/$PROJECT_NS/-/jobs/artifacts/$BRANCH/file/.results/test.log?job=evaluate)
+   ```
 
-Note: Replace `[PROJECT_PATH]` with your actual project path, e.g. `umiami/george/csc220/lab02`.
+   - Replace `$PROJECT_NS` with your actual project namespace, e.g. `umiami/george/csc220/matrix`.
+   - Replace `$BRANCH` with actual branch for current `README.md` file, e.g. `master` or `fall20`.
 
 ## Checkstyle IDE Extensions
 
@@ -49,4 +53,3 @@ Note: Replace `[PROJECT_PATH]` with your actual project path, e.g. `umiami/georg
 - [Maven checkstyle plugin](https://maven.apache.org/plugins/maven-checkstyle-plugin/)
 - [GitLab job artifacts](https://docs.gitlab.com/ee/ci/pipelines/job_artifacts.html)
 - [Shields.io](https://shields.io/)
-
