@@ -56,8 +56,10 @@ cat << EOD > "$tmppom"
 EOD
 
 # run checkstyle and save warnings and errors into log
-mvn -f "$tmppom" checkstyle:check | grep '^\[\(WARN\|ERROR\)' > .results/checkstyle.log \
-  || exit 1
+
+mvn -f "$tmppom" checkstyle:check | grep '^\[\(WARN\|ERROR\)' > .results/checkstyle.log
+[[ ${PIPESTATUS[0]} != 0 ]] \
+  && exit 1
 errs=$(cut -d" " -f2 < .results/checkstyle.log | sort -ut: -k1,2 | wc -l)
 lines=$(find $SRC -name "*.java" -exec cat {} + | wc -l)
 perc=100
