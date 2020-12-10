@@ -44,6 +44,10 @@
 - [NetBeans](https://checkstyle.org/netbeans.html)
 - [Intellij IDEA](https://checkstyle.org/idea.html)
 
+## Suggestions
+
+- [ ] Next to affected lines percentage, add a badge with list of errors/warnings types.
+
 ## Resources
 
 - [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html)
