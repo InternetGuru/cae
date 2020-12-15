@@ -7,7 +7,8 @@ curl -o ".results/compile.svg" "https://img.shields.io/badge/Compile-failed-crit
 curl -o ".results/checkstyle.svg" "https://img.shields.io/badge/Code%20Style-n/a-gray"
 curl -o ".results/test.svg" "https://img.shields.io/badge/Tests%20Passed-0/0-gray"
 
-mvn compile > .results/compile.log 2>&1 || exit 0
+mvn compile > .results/compile.log 2>&1 \
+  || exit 0
 curl -o ".results/compile.svg" "https://img.shields.io/badge/Compile-passed-success"
 
 tmppom="$(mktemp -d)/checkstyle-pom.xml"
@@ -63,18 +64,18 @@ mvn -f "$tmppom" checkstyle:check | grep '^\[\(WARN\|ERROR\)' > .results/checkst
 errs=$(cut -d" " -f2 < .results/checkstyle.log | sort -ut: -k1,2 | wc -l)
 lines=$(find $SRC -name "*.java" -exec cat {} + | wc -l)
 perc=100
-[[ $errs -gt 0 ]] \
-  && perc=$(( 99 - errs * 100 / lines ))
+(( errs > 0 )) \
+  && (( perc = 99 - errs * 100 / lines ))
 
 # output results to .results/checkstyle.json
 color="brightgreen"
-[[ $perc -lt 85 ]] \
+(( perc < 85 )) \
   && color="green"
-[[ $perc -lt 70 ]] \
+(( perc < 70 )) \
   && color="yellow"
-[[ $perc -lt 55 ]] \
+(( perc < 55 )) \
   && color="orange"
-[[ $perc -lt 45 ]] \
+(( perc < 45 )) \
   && color="red"
 
 curl -o ".results/checkstyle.svg" "https://img.shields.io/badge/Code%20Style-$perc%20%25-$color"
