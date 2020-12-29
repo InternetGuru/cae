@@ -25,7 +25,7 @@
      - evaluate
    ```
 
-1. To display badges in `README.md` file with links to appropriate log files:
+1. Display badges in `README.md` file with links to appropriate log files:
 
    ```
    [![pipeline status](https://gitlab.com/$PROJECT_NS/badges/$BRANCH/pipeline.svg)](https://gitlab.com/$PROJECT_NS/-/pipelines?ref=$BRANCH)
